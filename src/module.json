@@ -10,8 +10,10 @@
   ],
   "version": "1.0.0",
   "packs": [],
-  "system": [],
-  "dependencies": [],
+  "relationships": {
+    "systems": [],
+    "requires": []
+  },
   "scripts": [],
   "compatibility": {
     "minimum": "10",
