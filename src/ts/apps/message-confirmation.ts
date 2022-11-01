@@ -8,6 +8,7 @@ function promptConfirmation(message: ChatMessageData) {
     isPrompting = true;
     const form = document.getElementById("chat-form") as HTMLFormElement;
     const chatBox = document.getElementById("chat-message") as HTMLTextAreaElement;
+    setTimeout(() => { chatBox.value = message.content; }, 1); // Allow user to preview their chat message
     const confirmationBox = document.createElement("div");
     confirmationBox.classList.add("send-confirmation");
     confirmationBox.innerHTML = `<span>Confirm message?</span><input type="button" value="Submit (ALT + S)" class="send-confirmation__submit"><input type="button" value="Cancel (ALT + C)" class="send-confirmation__cancel">`;
@@ -18,6 +19,7 @@ function promptConfirmation(message: ChatMessageData) {
     form.insertBefore(confirmationBox, chatBox);
     const submitButton = confirmationBox.querySelector(".send-confirmation__submit") as HTMLInputElement;
     const cancelButton = confirmationBox.querySelector(".send-confirmation__cancel") as HTMLInputElement;
+    cancelButton.focus(); // Unfocus the text box so they can't continue typing
 
     let onConfirm: () => void;
     let onCancel: () => void;
@@ -32,6 +34,7 @@ function promptConfirmation(message: ChatMessageData) {
         confirmationBox.remove();
         document.removeEventListener("keydown", onKeyDown);
 
+        chatBox.value = "";
         const now = Date.now()
         message.timestamp = now;
         message._source.timestamp = now; // Otherwise, it would use the old timestamp
