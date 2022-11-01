@@ -4,8 +4,8 @@ import {ConfirmChatSend} from "./module";
 export const registerSettings = () => {
     for (const messageType in CONST.CHAT_MESSAGE_TYPES) {
         game.settings.register(moduleId, `confirm-${messageType}`, {
-            name: `Confirm ${messageType.toLowerCase()} messages`,
-            hint: `If enabled, you will be prompted to confirm sending ${messageType.toLowerCase()} messages.`,
+            name: game.i18n.localize(`confirm-chat-send.settings.confirm.${messageType.toLowerCase()}.name`),
+            hint: game.i18n.localize(`confirm-chat-send.settings.confirm.${messageType.toLowerCase()}.hint`),
             scope: "client",
             config: true,
             type: Boolean,
