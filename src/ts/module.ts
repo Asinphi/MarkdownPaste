@@ -3,8 +3,9 @@
 import {ModuleData} from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/packages.mjs";
 
 import { moduleId } from "./constants";
+import { registerSettings, loadSettings } from "./settings";
+import "./apps/message-confirmation";
 import "../styles/style.scss";
-import PreviewBox from "./apps/typing-preview";
 
 declare global {
     interface LenientGlobalVariableTypes {
@@ -12,15 +13,17 @@ declare global {
     }
 }
 
-export class RevealTyping {
+export class ConfirmChatSend {
     static ID = moduleId;
     static module: Game.ModuleData<ModuleData>;
-    static previewBox: PreviewBox;
-    static packetDebounce: number = 100;
-
-    static TEMPLATES = {
-        PREVIEW_BOX: `modules/${this.ID}/templates/preview-box.hbs`,
-    }
+    static messageTypesToConfirm = {
+        [CONST.CHAT_MESSAGE_TYPES.OTHER]: false,
+        [CONST.CHAT_MESSAGE_TYPES.OOC]: false,
+        [CONST.CHAT_MESSAGE_TYPES.IC]: false,
+        [CONST.CHAT_MESSAGE_TYPES.EMOTE]: false,
+        [CONST.CHAT_MESSAGE_TYPES.WHISPER]: false,
+        [CONST.CHAT_MESSAGE_TYPES.ROLL]: false,
+    };
 
     static log(force: boolean | any, ...args: any) {
         // @ts-ignore
@@ -31,34 +34,18 @@ export class RevealTyping {
 }
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }: any) => {
-    registerPackageDebugFlag(RevealTyping.ID);
+    registerPackageDebugFlag(ConfirmChatSend.ID);
 });
 
 Hooks.once("init", () => {
-    RevealTyping.module = (game as Game).modules.get(moduleId);
-    RevealTyping.previewBox = new PreviewBox();
+    ConfirmChatSend.module = (game as Game).modules.get(moduleId);
     // @ts-ignore
-    globalThis.RevealTyping = RevealTyping;
+    ConfirmChatSend.module.api = {
+        ConfirmChatSend,
+    }
     console.log(`Initializing ${moduleId}`);
 
     // Setup settings
-    game.settings.register(RevealTyping.ID, "packetDebounce", {
-        name: game.i18n.localize("reveal-typing.settings.packet-debounce.name"),
-        hint: game.i18n.localize("reveal-typing.settings.packet-debounce.hint"),
-        scope: "world",
-        config: true,
-        type: Number,
-        default: 100,
-        range: {
-            min: 0,
-            max: 1000,
-            step: 10,
-        },
-        onChange: (newValue: number) => { // Fires on all clients for world scoped settings
-            RevealTyping.packetDebounce = newValue;
-            RevealTyping.log("Changed the packetDebounce value to", newValue);
-        }
-    });
-
-    RevealTyping.packetDebounce = game.settings.get(RevealTyping.ID, "packetDebounce") as number;
+    registerSettings();
+    loadSettings();
 });

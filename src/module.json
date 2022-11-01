@@ -1,8 +1,7 @@
 {
-  "$schema": "https://json.schemastore.org/foundryvtt-manifest.json",
-  "id": "reveal-typing",
-  "title": "Reveal Typing",
-  "description": "Allows GMs to see what the players are typing before they send it.",
+  "id": "confirm-chat-send",
+  "title": "Confirm Chat Send",
+  "description": "Lets careful users confirm their chat messages before sending them.",
   "authors": [
     {
       "name": "Asinphi",
@@ -26,6 +25,5 @@
     }
   ],
   "styles": ["style.css"],
-  "socket": true,
   "esmodules": ["scripts/module.js"]
 }
