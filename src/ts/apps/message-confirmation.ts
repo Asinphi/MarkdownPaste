@@ -6,8 +6,15 @@ let isPrompting: boolean = false;
 
 function promptConfirmation(message: ChatMessageData) {
     isPrompting = true;
-    const form = document.getElementById("chat-form") as HTMLFormElement;
-    const chatBox = document.getElementById("chat-message") as HTMLTextAreaElement;
+    let chatBox: HTMLTextAreaElement;
+    if (document.hasFocus()) { // Make compatible with popouts
+        chatBox = document.activeElement.id === "chat-message" ? document.activeElement as HTMLTextAreaElement : document.querySelector("#chat-message") as HTMLTextAreaElement;
+    } else if (ui.sidebar.popouts.chat) {
+        chatBox = ui.sidebar.popouts.chat.element.find("#chat-message")[0] as HTMLTextAreaElement;
+    } else {
+        chatBox = document.activeElement.id === "chat-message" ? document.activeElement as HTMLTextAreaElement : document.querySelector("#chat-message") as HTMLTextAreaElement;
+    }
+    const form = chatBox.parentElement;
     setTimeout(() => { chatBox.value = message.content; }, 1); // Allow user to preview their chat message
     const confirmationBox = document.createElement("div");
     confirmationBox.classList.add("send-confirmation");
@@ -31,8 +38,9 @@ function promptConfirmation(message: ChatMessageData) {
                 onCancel();
     }
     onConfirm = () => {
+        chatBox.focus(); // Focus the text box so they can continue typing
         confirmationBox.remove();
-        document.removeEventListener("keydown", onKeyDown);
+        form.removeEventListener("keydown", onKeyDown);
 
         chatBox.value = "";
         const now = Date.now()
@@ -46,13 +54,13 @@ function promptConfirmation(message: ChatMessageData) {
     onCancel = () => {
         ConfirmChatSend.log("Message cancelled");
         confirmationBox.remove();
-        document.removeEventListener("keydown", onKeyDown);
+        form.removeEventListener("keydown", onKeyDown);
 
         chatBox.value = message.content;
         chatBox.focus();
         isPrompting = false;
     }
-    document.addEventListener("keydown", onKeyDown);
+    form.addEventListener("keydown", onKeyDown);
     submitButton.addEventListener("click", onConfirm);
     cancelButton.addEventListener("click", onCancel);
 }
