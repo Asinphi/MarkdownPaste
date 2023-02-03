@@ -1,5 +1,5 @@
-# Confirm Chat Send
+# Markup Paste
 
-A [Foundry VTT](https://foundryvtt.com) module for careful users who don't want to accidentally send the message they're typing before finishing. You can select which message types to confirm in your settings, and every time you try to send a message of that type, it will ask you for confirmation, first. Canceling will allow you to continue working on your message. You can also use the keyboard shortcuts ALT + S or ALT + C to submit or cancel, respectively.
+A [Foundry VTT](https://foundryvtt.com) module that allows you to paste text from the clipboard into the chat log as formatted text. It uses the [DF Chat Enhancements Module](https://foundryvtt.com/packages/df-chat-enhance) markdown format and has been tested to work with pasting formatted text from Discord and Notion.
 
-Each of your players can customize their own settings for themselves, or disable all message types so they won't be asked to confirm any chat messages.
+This uses the [Turndown library](https://github.com/mixmark-io/turndown) to convert HTML to markdown.

@@ -10,10 +10,14 @@
   },
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
+    "@types/turndown": "^5.0.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-scss": "^3.0.0",
     "sass": "^1.54.8",
     "typescript": "^4.8.4",
     "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "turndown": "^7.1.1"
   }
 }

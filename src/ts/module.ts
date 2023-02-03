@@ -3,8 +3,7 @@
 import {ModuleData} from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/packages.mjs";
 
 import { moduleId } from "./constants";
-import { registerSettings, loadSettings } from "./settings";
-import "./apps/message-confirmation";
+import "./apps/chat-paste";
 import "../styles/style.scss";
 
 declare global {
@@ -13,17 +12,9 @@ declare global {
     }
 }
 
-export class ConfirmChatSend {
+export class MarkupPaste {
     static ID = moduleId;
     static module: Game.ModuleData<ModuleData>;
-    static messageTypesToConfirm = {
-        [CONST.CHAT_MESSAGE_TYPES.OTHER]: false,
-        [CONST.CHAT_MESSAGE_TYPES.OOC]: false,
-        [CONST.CHAT_MESSAGE_TYPES.IC]: false,
-        [CONST.CHAT_MESSAGE_TYPES.EMOTE]: false,
-        [CONST.CHAT_MESSAGE_TYPES.WHISPER]: false,
-        [CONST.CHAT_MESSAGE_TYPES.ROLL]: false,
-    };
 
     static log(force: boolean | any, ...args: any) {
         // @ts-ignore
@@ -34,18 +25,14 @@ export class ConfirmChatSend {
 }
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }: any) => {
-    registerPackageDebugFlag(ConfirmChatSend.ID);
+    registerPackageDebugFlag(MarkupPaste.ID);
 });
 
 Hooks.once("init", () => {
-    ConfirmChatSend.module = (game as Game).modules.get(moduleId);
+    MarkupPaste.module = (game as Game).modules.get(moduleId);
     // @ts-ignore
-    ConfirmChatSend.module.api = {
-        ConfirmChatSend,
+    MarkupPaste.module.api = {
+        MarkupPaste,
     }
     console.log(`Initializing ${moduleId}`);
-
-    // Setup settings
-    registerSettings();
-    loadSettings();
 });

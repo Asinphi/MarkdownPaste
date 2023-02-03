@@ -1,7 +1,7 @@
 {
-  "id": "confirm-chat-send",
-  "title": "Confirm Chat Send",
-  "description": "Lets careful users confirm their chat messages before sending them.",
+  "id": "markup-paste",
+  "title": "Markup Paste",
+  "description": "Paste formatted text directly into chat with DFCE markup.",
   "authors": [
     {
       "name": "Asinphi",
@@ -12,7 +12,9 @@
   "packs": [],
   "relationships": {
     "systems": [],
-    "requires": []
+    "requires": [
+      "df-chat-enhance"
+    ]
   },
   "scripts": [],
   "compatibility": {
