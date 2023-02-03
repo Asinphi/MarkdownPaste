@@ -13,7 +13,9 @@
   "relationships": {
     "systems": [],
     "requires": [
-      "df-chat-enhance"
+      {
+        "id": "df-chat-enhance"
+      }
     ]
   },
   "scripts": [],
