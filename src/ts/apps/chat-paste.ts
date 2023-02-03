@@ -1,5 +1,5 @@
 import TurndownService from 'Turndown';
-import {MarkupPaste} from "../module";
+import {MarkdownPaste} from "../module";
 
 const turndown = new TurndownService({
     hr: "---",
@@ -35,9 +35,9 @@ Hooks.on("renderChatLog", (_app: Application, html: JQuery, _options: never) => 
             chatMessageEl.value = text.slice(0, chatMessageEl.selectionStart) +
                 result.replace(endSpaceRe, '\n').trim() +
                 text.slice(chatMessageEl.selectionEnd);
-            MarkupPaste.log("Successfully parsed clipboard data", result, clipboardData)
+            MarkdownPaste.log("Successfully parsed clipboard data", result, clipboardData)
         } catch (err) { // turndown throws TypeError if input isn't string
-            MarkupPaste.log("Error parsing clipboard data", err);
+            MarkdownPaste.log("Error parsing clipboard data", err);
             return;
         }
     });

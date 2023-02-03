@@ -1,7 +1,7 @@
 {
-  "id": "markup-paste",
-  "title": "Markup Paste",
-  "description": "Paste formatted text directly into chat with DFCE markup.",
+  "id": "markdown-paste",
+  "title": "Markdown Paste",
+  "description": "Paste formatted text directly into chat with DFCE markdown.",
   "authors": [
     {
       "name": "Asinphi",

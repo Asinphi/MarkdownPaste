@@ -12,7 +12,7 @@ declare global {
     }
 }
 
-export class MarkupPaste {
+export class MarkdownPaste {
     static ID = moduleId;
     static module: Game.ModuleData<ModuleData>;
 
@@ -25,14 +25,14 @@ export class MarkupPaste {
 }
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }: any) => {
-    registerPackageDebugFlag(MarkupPaste.ID);
+    registerPackageDebugFlag(MarkdownPaste.ID);
 });
 
 Hooks.once("init", () => {
-    MarkupPaste.module = (game as Game).modules.get(moduleId);
+    MarkdownPaste.module = (game as Game).modules.get(moduleId);
     // @ts-ignore
-    MarkupPaste.module.api = {
-        MarkupPaste,
+    MarkdownPaste.module.api = {
+        MarkupPaste: MarkdownPaste,
     }
     console.log(`Initializing ${moduleId}`);
 });
