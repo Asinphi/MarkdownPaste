@@ -1,4 +1,4 @@
-import TurndownService from 'Turndown';
+import TurndownService from 'turndown';
 import {MarkdownPaste} from "../module";
 
 const turndown = new TurndownService({
